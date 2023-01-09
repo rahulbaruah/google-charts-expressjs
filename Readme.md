@@ -10,7 +10,7 @@
 
 ## Building your image
 
-`docker build . -t rahulbaruah/google-charts-express`
+`docker build -t rahulbaruah/google-charts-express -f Dockerfile ./`
 
 ## Run the image
 

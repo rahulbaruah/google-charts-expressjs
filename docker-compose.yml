@@ -10,7 +10,7 @@ services:
             - ./src/:/usr/src/app
         container_name: google-charts-express
         expose:
-            - '8080'
+            - 8080
         ports:
-            - '49160'
-        command: node server.js
+            - 49160:8080
+        command: nodemon server.js

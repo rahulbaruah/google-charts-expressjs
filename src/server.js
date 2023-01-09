@@ -12,7 +12,7 @@ const HOST = '0.0.0.0';
 // var args = process.argv.slice(2);
 
 // Define your chart drawing function
-function drawChart() {
+/* function drawChart() {
     const data = google.visualization.arrayToDataTable([
         ['City', '2010 Population'],
         ['New York City, NY', 8175000],
@@ -36,7 +36,7 @@ function drawChart() {
 
     const chart = new google.visualization.BarChart(container);
     chart.draw(data, options);
-}
+} */
 
 const myArg = 12345;
 const myOtherArg = [5, 10, 15, 20];
@@ -80,7 +80,7 @@ async function getChartImage() {
 }
 
 app.get('/', (req, res) => {
-    res.send('Hello World Docker');
+    res.send('Hello World!!!');
 });
 
 app.get('/image1', async (req, res, next) => {
