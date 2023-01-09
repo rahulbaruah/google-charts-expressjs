@@ -85,7 +85,7 @@ app.get('/', (req, res) => {
 
 app.get('/image1', async (req, res, next) => {
     try {
-        img = await getChartImage();
+        let img = await getChartImage();
         res.writeHead(200, {
             'Content-Type': 'image/png',
             'Content-Length': img.length,

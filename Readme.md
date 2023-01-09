@@ -48,4 +48,4 @@ Running on http://localhost:8080
 
 ## Troubleshoot
 
-`docker run --rm -it node:19.4.0 /bin/sh`
+`docker run --rm -it buildkite/puppeteer:latest /bin/sh`

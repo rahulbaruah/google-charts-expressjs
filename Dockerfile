@@ -1,6 +1,8 @@
 FROM buildkite/puppeteer:latest
 
-RUN npm install -g nodemon
+RUN npm install -g nodemon \
+    && apt-get update \
+    && apt install -y chromium-browser
 
 RUN mkdir -p /usr/src/app
 RUN mkdir -p /home/appuser
@@ -13,7 +15,7 @@ RUN chown -R appuser:appuser /home/appuser
 USER appuser
 
 WORKDIR /usr/src/app
-COPY ./src/package*.json ./
+COPY ./src/package.json ./
 
 RUN npm install
 
