@@ -80,7 +80,7 @@ async function getChartImage() {
 }
 
 app.get('/', (req, res) => {
-    res.send('Hello World from Docker');
+    res.send('Hello World Docker');
 });
 
 app.get('/image1', async (req, res, next) => {

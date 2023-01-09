@@ -13,4 +13,4 @@ services:
             - '8080'
         ports:
             - '49160'
-        command: npm run start
+        command: node server.js

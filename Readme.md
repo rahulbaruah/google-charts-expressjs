@@ -45,3 +45,7 @@ Running on http://localhost:8080
 
 **Confirm that the app has stopped**
 `curl -i localhost:49160`
+
+## Troubleshoot
+
+`docker run --rm -it node:19.4.0 /bin/sh`
