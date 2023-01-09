@@ -1,0 +1,16 @@
+version: '3'
+services:
+    google-charts-express:
+        environment:
+            - NODE_ENV=development
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - ./src/:/usr/src/app
+        container_name: google-charts-express
+        expose:
+            - '8080'
+        ports:
+            - '49160'
+        command: npm run start
