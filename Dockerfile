@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install gnupg wget -y && \
     apt-get install google-chrome-stable -y --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
+# RUN apt-get install chromium-browser
+
 
 RUN npm install -g nodemon
 
@@ -28,14 +30,14 @@ RUN groupadd -g $UID $USER && \
 RUN chown -R $USER:$USER /usr/src/app
 RUN chown -R $USER:$USER /home/$USER
 
-USER $USER
-
 WORKDIR /usr/src/app
 COPY ./src/package.json ./
 
 RUN npm install
+RUN npm install puppeteer --unsafe-perm=true --allow-root
+RUN node ./node_modules/puppeteer/install.js
 
 # COPY ./src/ ./
-
+USER $USER
 EXPOSE 8080
 CMD [ "nodemon", "server.js" ]

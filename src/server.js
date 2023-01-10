@@ -75,13 +75,15 @@ async function getChartImage() {
     const image = await GoogleChartsNode.render(drawChartStr, {
         width: 400,
         height: 300,
+        args: ['--no-sandbox'],
+        // executablePath: '/usr/bin/chromium-browser',
     });
     //   var buffer64 = new Buffer.from(image, "base64").toString("base64");
     return new Buffer.from(image, 'base64');
 }
 
 app.get('/', (req, res) => {
-    res.send('Hello World!!!');
+    res.send('Hello World from Docker');
 });
 
 app.get('/image1', async (req, res, next) => {
@@ -101,15 +103,16 @@ app.listen(PORT, HOST, () => {
     console.log(`Running on http://${HOST}:${PORT}`);
 });
 
-const URL = 'https://koyeb.com';
-
-const screenshot = async () => {
+const screenshot = async (url) => {
     console.log('Opening the browser...');
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox'],
+        // executablePath: '/usr/bin/chromium-browser',
+    });
     const page = await browser.newPage();
 
-    console.log(`Go to ${URL}`);
-    await page.goto(URL);
+    console.log(`Go to ${url}`);
+    await page.goto(url);
 
     console.log('Taking a screenshot...');
     await page.screenshot({
@@ -123,8 +126,7 @@ const screenshot = async () => {
     console.log('Job done!');
 };
 
-screenshot();
-
-app.get('/test', (req, res) => {
-    res.send('Test');
+app.get('/screenshot', (req, res) => {
+    const URL = 'https://www.google.com';
+    screenshot(URL);
 });
