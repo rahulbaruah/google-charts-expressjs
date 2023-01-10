@@ -1,18 +1,34 @@
-FROM buildkite/puppeteer:latest
+FROM node:19.4.0
 
-RUN npm install -g nodemon \
-    && apt-get update \
-    && apt install -y chromium-browser
+ARG USER=appuser
+ARG UID=999
+
+RUN apt-get update && apt-get install -y gconf-service libgbm-dev libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
+
+# We don't need the standalone Chromium
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+# Install Google Chrome Stable and fonts
+# Note: this installs the necessary libs to make the browser work with Puppeteer.
+RUN apt-get update && apt-get install gnupg wget -y && \
+    wget --quiet --output-document=- https://dl-ssl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/google-archive.gpg && \
+    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' && \
+    apt-get update && \
+    apt-get install google-chrome-stable -y --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
+
+
+RUN npm install -g nodemon
 
 RUN mkdir -p /usr/src/app
-RUN mkdir -p /home/appuser
+RUN mkdir -p /home/$USER
 
-RUN groupadd -g 999 appuser && \
-    useradd -r -u 999 -g appuser appuser
-RUN chown -R appuser:appuser /usr/src/app
-RUN chown -R appuser:appuser /home/appuser
+RUN groupadd -g $UID $USER && \
+    useradd -r -u $UID -g $USER $USER
+RUN chown -R $USER:$USER /usr/src/app
+RUN chown -R $USER:$USER /home/$USER
 
-USER appuser
+USER $USER
 
 WORKDIR /usr/src/app
 COPY ./src/package.json ./

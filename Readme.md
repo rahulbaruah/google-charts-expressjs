@@ -33,6 +33,8 @@ Running on http://localhost:8080
 
 `docker exec -it <container id> /bin/bash`
 
+`docker exec -it --user root e0365658aa79 /bin/bash`
+
 ## Test
 
 `docker ps`
