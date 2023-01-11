@@ -75,8 +75,9 @@ async function getChartImage() {
     const image = await GoogleChartsNode.render(drawChartStr, {
         width: 400,
         height: 300,
-        args: ['--no-sandbox'],
-        // executablePath: '/usr/bin/chromium-browser',
+        headless: true,
+        args: ['--disable-gpu', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-sandbox'],
+        executablePath: '/usr/bin/google-chrome-stable',
     });
     //   var buffer64 = new Buffer.from(image, "base64").toString("base64");
     return new Buffer.from(image, 'base64');
@@ -106,8 +107,9 @@ app.listen(PORT, HOST, () => {
 const screenshot = async (url) => {
     console.log('Opening the browser...');
     const browser = await puppeteer.launch({
-        args: ['--no-sandbox'],
-        // executablePath: '/usr/bin/chromium-browser',
+        headless: true,
+        args: ['--disable-gpu', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-sandbox'],
+        executablePath: '/usr/bin/google-chrome-stable',
     });
     const page = await browser.newPage();
 
@@ -124,9 +126,11 @@ const screenshot = async (url) => {
     await page.close();
     await browser.close();
     console.log('Job done!');
+    return 'Screenshot Successful';
 };
 
-app.get('/screenshot', (req, res) => {
+app.get('/screenshot', async (req, res) => {
     const URL = 'https://www.google.com';
-    screenshot(URL);
+    const msg = await screenshot(URL);
+    return res.send(msg);
 });

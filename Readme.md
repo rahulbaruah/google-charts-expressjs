@@ -51,3 +51,11 @@ Running on http://localhost:8080
 ## Troubleshoot
 
 `docker run --rm -it buildkite/puppeteer:latest /bin/sh`
+
+## Custom node modules from github
+
+`npm install https://github.com/<username>/<repository>/tarball/<branch>`
+
+Or in package.json add the following:
+
+`"custom_module": "https://github.com/<username>/<repository>/tarball/master"`
