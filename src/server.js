@@ -2,7 +2,7 @@
 
 const express = require('express');
 const app = express();
-const GoogleChartsNode = require('google-charts-node');
+const GoogleChartsNode = require('./index');
 const puppeteer = require('puppeteer');
 
 // Constants
@@ -75,7 +75,7 @@ async function getChartImage() {
     const image = await GoogleChartsNode.render(drawChartStr, {
         width: 400,
         height: 300,
-        headless: true,
+        // headless: true,
         args: ['--disable-gpu', '--disable-dev-shm-usage', '--disable-setuid-sandbox', '--no-sandbox'],
         executablePath: '/usr/bin/google-chrome-stable',
     });

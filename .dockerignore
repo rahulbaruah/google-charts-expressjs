@@ -11,3 +11,5 @@
 **/dist
 **/.eslintrc.js
 **/.prettierrc.js
+**/screenshot.png
+**/package-lock.json
